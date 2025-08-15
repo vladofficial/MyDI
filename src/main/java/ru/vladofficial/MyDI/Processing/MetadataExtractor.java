@@ -38,8 +38,24 @@ public class MetadataExtractor {
             boolean singleton = component.isAnnotationPresent(Singleton.class);
             boolean primaryImplementation = component.isAnnotationPresent(PrimaryImplementation.class);
 
+            Method postConstruct = null;
+
+            for (Method method : component.getDeclaredMethods()) {
+                if (method.isAnnotationPresent(PostConstruct.class)) {
+                    if (postConstruct != null) {
+                        throw new RuntimeException("Multiple @PostConstruct methods for class " + component.getTypeName());
+                    }
+
+                    if (method.getParameters().length != 0) {
+                        throw new RuntimeException("@PostConstruct methods shouldn't have arguments");
+                    }
+
+                    postConstruct = method;
+                }
+            }
+
             result.add(new ComponentMetadata(component, constructors, autowiredConstructor, injectableFields,
-                    singleton, primaryImplementation));
+                    singleton, primaryImplementation, postConstruct));
         }
 
         return result;

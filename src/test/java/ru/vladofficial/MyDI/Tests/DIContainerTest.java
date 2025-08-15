@@ -105,4 +105,9 @@ class DIContainerTest {
             assertEquals("Ambiguous interface implementations, 2 provided", exc.getMessage());
         }
     }
+
+    @Test
+    public void constructorWithArgumentsTest() {
+        assertDoesNotThrow(() -> container.createUsingConstructorInjection(MoreComplexClass.class));
+    }
 }

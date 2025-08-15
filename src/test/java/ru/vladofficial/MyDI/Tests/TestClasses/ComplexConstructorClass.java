@@ -10,5 +10,6 @@ public class ComplexConstructorClass {
     @Autowired
     public ComplexConstructorClass() {
         dependency = new SimpleClass();
+        System.out.println("Complex class created");
     }
 }
