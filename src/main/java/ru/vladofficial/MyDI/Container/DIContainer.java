@@ -87,21 +87,21 @@ public class DIContainer {
         );
     }
 
-    public Object createUsingFieldInjection(Class<?> requiredClass) {
-        return doCreate(requiredClass, cls ->
+    public <T> T createUsingFieldInjection(Class<T> requiredClass) {
+        return requiredClass.cast(doCreate(requiredClass, cls ->
                 componentFactory.createUsingFieldInjection(cls, beans, components, interfaceResolver)
-        );
+        ));
     }
 
-    public Object createUsingConstructorInjection(Class<?> requiredClass) {
-        return doCreate(requiredClass, cls ->
+    public <T> T createUsingConstructorInjection(Class<T> requiredClass) {
+        return requiredClass.cast(doCreate(requiredClass, cls ->
                 componentFactory.createUsingConstructorInjection(cls, beans, components, interfaceResolver)
-        );
+        ));
     }
 
-    public Object createInstance(Class<?> requiredClass) {
-        return doCreate(requiredClass, cls ->
+    public <T> T createInstance(Class<T> requiredClass) {
+        return requiredClass.cast(doCreate(requiredClass, cls ->
                 componentFactory.createInstance(cls, beans, components, interfaceResolver)
-        );
+        ));
     }
 }
